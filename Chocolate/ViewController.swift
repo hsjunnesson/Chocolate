@@ -7,19 +7,26 @@
 //
 
 import UIKit
+import Render
+
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    
+    @IBOutlet weak var renderView: UIImageView!
+    
+    override func viewDidLayoutSubviews() {
+        let width = Int(self.renderView.bounds.width - self.renderView.bounds.width % 8)
+        let height = Int(self.renderView.bounds.height - self.renderView.bounds.height % 8)
+        let scale = UIScreen.mainScreen().scale
+        
+        guard
+            let renderer = Renderer(),
+            let cgImage = try? renderer.render(width: width * Int(scale), height: height * Int(scale)) as CGImage! else {
+                return
+        }
+        
+        let uiImage = UIImage(CGImage: cgImage, scale: scale, orientation: .Up)
+        
+        self.renderView.image = uiImage
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
-

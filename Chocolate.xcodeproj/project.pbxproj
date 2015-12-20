@@ -14,6 +14,10 @@
 		D77478961C269C9100F37B97 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D77478941C269C9100F37B97 /* LaunchScreen.storyboard */; };
 		D77478A11C269C9100F37B97 /* ChocolateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77478A01C269C9100F37B97 /* ChocolateTests.swift */; };
 		D77478AC1C269C9100F37B97 /* ChocolateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77478AB1C269C9100F37B97 /* ChocolateUITests.swift */; };
+		D77478E71C26A80D00F37B97 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77478DE1C269CF600F37B97 /* Metal.framework */; };
+		D77478E91C26A84C00F37B97 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77478E81C26A84C00F37B97 /* Render.swift */; };
+		D77478EB1C26A87000F37B97 /* Library.metal in Sources */ = {isa = PBXBuildFile; fileRef = D77478EA1C26A87000F37B97 /* Library.metal */; };
+		D77478EC1C26A89C00F37B97 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77478E51C26A65E00F37B97 /* MetalKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +37,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D77478D81C269CD200F37B97 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		D77478881C269C9100F37B97 /* Chocolate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chocolate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D774788B1C269C9100F37B97 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +64,11 @@
 		D77478A71C269C9100F37B97 /* ChocolateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChocolateUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D77478AB1C269C9100F37B97 /* ChocolateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChocolateUITests.swift; sourceTree = "<group>"; };
 		D77478AD1C269C9100F37B97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D77478DE1C269CF600F37B97 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		D77478E21C26A26B00F37B97 /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
+		D77478E51C26A65E00F37B97 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		D77478E81C26A84C00F37B97 /* Render.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Render.swift; sourceTree = "<group>"; };
+		D77478EA1C26A87000F37B97 /* Library.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Library.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D77478EC1C26A89C00F37B97 /* MetalKit.framework in Frameworks */,
+				D77478E71C26A80D00F37B97 /* Metal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +101,9 @@
 		D774787F1C269C9100F37B97 = {
 			isa = PBXGroup;
 			children = (
+				D77478E21C26A26B00F37B97 /* Playground.playground */,
+				D77478E51C26A65E00F37B97 /* MetalKit.framework */,
+				D77478DE1C269CF600F37B97 /* Metal.framework */,
 				D774788A1C269C9100F37B97 /* Chocolate */,
 				D774789F1C269C9100F37B97 /* ChocolateTests */,
 				D77478AA1C269C9100F37B97 /* ChocolateUITests */,
@@ -103,6 +130,8 @@
 				D77478921C269C9100F37B97 /* Assets.xcassets */,
 				D77478941C269C9100F37B97 /* LaunchScreen.storyboard */,
 				D77478971C269C9100F37B97 /* Info.plist */,
+				D77478E81C26A84C00F37B97 /* Render.swift */,
+				D77478EA1C26A87000F37B97 /* Library.metal */,
 			);
 			path = Chocolate;
 			sourceTree = "<group>";
@@ -135,6 +164,7 @@
 				D77478841C269C9100F37B97 /* Sources */,
 				D77478851C269C9100F37B97 /* Frameworks */,
 				D77478861C269C9100F37B97 /* Resources */,
+				D77478D81C269CD200F37B97 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -258,6 +288,8 @@
 			files = (
 				D774788E1C269C9100F37B97 /* ViewController.swift in Sources */,
 				D774788C1C269C9100F37B97 /* AppDelegate.swift in Sources */,
+				D77478E91C26A84C00F37B97 /* Render.swift in Sources */,
+				D77478EB1C26A87000F37B97 /* Library.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

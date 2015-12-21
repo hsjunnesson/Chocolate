@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D774788C1C269C9100F37B97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774788B1C269C9100F37B97 /* AppDelegate.swift */; };
-		D774788E1C269C9100F37B97 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774788D1C269C9100F37B97 /* ViewController.swift */; };
+		D774788E1C269C9100F37B97 /* RenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D774788D1C269C9100F37B97 /* RenderViewController.swift */; };
 		D77478911C269C9100F37B97 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D774788F1C269C9100F37B97 /* Main.storyboard */; };
 		D77478931C269C9100F37B97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D77478921C269C9100F37B97 /* Assets.xcassets */; };
 		D77478961C269C9100F37B97 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D77478941C269C9100F37B97 /* LaunchScreen.storyboard */; };
@@ -16,8 +16,10 @@
 		D77478AC1C269C9100F37B97 /* ChocolateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77478AB1C269C9100F37B97 /* ChocolateUITests.swift */; };
 		D77478E71C26A80D00F37B97 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77478DE1C269CF600F37B97 /* Metal.framework */; };
 		D77478E91C26A84C00F37B97 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77478E81C26A84C00F37B97 /* Render.swift */; };
-		D77478EB1C26A87000F37B97 /* Library.metal in Sources */ = {isa = PBXBuildFile; fileRef = D77478EA1C26A87000F37B97 /* Library.metal */; };
 		D77478EC1C26A89C00F37B97 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77478E51C26A65E00F37B97 /* MetalKit.framework */; };
+		D77479341C283BFF00F37B97 /* Library.metal in Sources */ = {isa = PBXBuildFile; fileRef = D77478EA1C26A87000F37B97 /* Library.metal */; };
+		D77479351C283C5900F37B97 /* Library.metal in CopyFiles */ = {isa = PBXBuildFile; fileRef = D77478EA1C26A87000F37B97 /* Library.metal */; };
+		D77479371C28A67500F37B97 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77479361C28A67500F37B97 /* SourceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,12 +50,22 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D77479321C2830CE00F37B97 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				D77479351C283C5900F37B97 /* Library.metal in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D77478881C269C9100F37B97 /* Chocolate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chocolate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D774788B1C269C9100F37B97 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D774788D1C269C9100F37B97 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D774788D1C269C9100F37B97 /* RenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderViewController.swift; sourceTree = "<group>"; };
 		D77478901C269C9100F37B97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D77478921C269C9100F37B97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D77478951C269C9100F37B97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -69,6 +81,7 @@
 		D77478E51C26A65E00F37B97 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		D77478E81C26A84C00F37B97 /* Render.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Render.swift; sourceTree = "<group>"; };
 		D77478EA1C26A87000F37B97 /* Library.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Library.metal; sourceTree = "<group>"; };
+		D77479361C28A67500F37B97 /* SourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				D774788B1C269C9100F37B97 /* AppDelegate.swift */,
-				D774788D1C269C9100F37B97 /* ViewController.swift */,
+				D774788D1C269C9100F37B97 /* RenderViewController.swift */,
+				D77479361C28A67500F37B97 /* SourceViewController.swift */,
 				D774788F1C269C9100F37B97 /* Main.storyboard */,
 				D77478921C269C9100F37B97 /* Assets.xcassets */,
 				D77478941C269C9100F37B97 /* LaunchScreen.storyboard */,
@@ -165,6 +179,7 @@
 				D77478851C269C9100F37B97 /* Frameworks */,
 				D77478861C269C9100F37B97 /* Resources */,
 				D77478D81C269CD200F37B97 /* Embed Frameworks */,
+				D77479321C2830CE00F37B97 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -286,10 +301,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D774788E1C269C9100F37B97 /* ViewController.swift in Sources */,
+				D77479371C28A67500F37B97 /* SourceViewController.swift in Sources */,
+				D77479341C283BFF00F37B97 /* Library.metal in Sources */,
+				D774788E1C269C9100F37B97 /* RenderViewController.swift in Sources */,
 				D774788C1C269C9100F37B97 /* AppDelegate.swift in Sources */,
 				D77478E91C26A84C00F37B97 /* Render.swift in Sources */,
-				D77478EB1C26A87000F37B97 /* Library.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

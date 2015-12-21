@@ -15,6 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Copy shader
+        if let shaderSource = NSBundle.mainBundle().pathForResource("Library", ofType: "metal") {
+            let shaderDestination = localShaderPath()
+            if !NSFileManager.defaultManager().fileExistsAtPath(shaderDestination) {
+                try! NSFileManager.defaultManager().copyItemAtPath(shaderSource, toPath: shaderDestination)
+            }
+        }
+        
         return true
     }
 

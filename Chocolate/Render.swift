@@ -13,6 +13,14 @@ import MetalKit
 public enum RenderErrorType: ErrorType {
     case InvalidResolution
     case InvalidImage
+    case InvalidProgram
+}
+
+public func localShaderPath() -> String {
+    let documentDirectoryUrl = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
+    let shaderPath = documentDirectoryUrl.URLByAppendingPathComponent("Library.metal").path!
+    
+    return shaderPath
 }
 
 public struct Renderer {
@@ -27,15 +35,15 @@ public struct Renderer {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private let library: MTLLibrary
-    private let renderFunction: MTLFunction
+    private let renderBucketFunction: MTLFunction
     private let computePipelineState: MTLComputePipelineState
     
     public init?() {
         guard
             let device = MTLCreateSystemDefaultDevice(),
-            let library = device.newDefaultLibrary(),
-            let renderFunction = library.newFunctionWithName("render"),
-            let computePipelineState = try? device.newComputePipelineStateWithFunction(renderFunction)
+            let library = loadLibrary(device),
+            let renderBucketFunction = library.newFunctionWithName("renderBucket"),
+            let computePipelineState = try? device.newComputePipelineStateWithFunction(renderBucketFunction)
             else {
             return nil
         }
@@ -43,7 +51,7 @@ public struct Renderer {
         self.device = device
         self.commandQueue = device.newCommandQueue()
         self.library = library
-        self.renderFunction = renderFunction
+        self.renderBucketFunction = renderBucketFunction
         self.computePipelineState = computePipelineState
     }
     
@@ -103,4 +111,14 @@ public struct Renderer {
         
         return imageRef
     }
+}
+
+private func loadLibrary(device: MTLDevice) -> MTLLibrary? {
+    guard
+        let source = try? NSString(contentsOfFile: localShaderPath(), encoding: NSUTF8StringEncoding) as String,
+        let library = try? device.newLibraryWithSource(source, options: nil) else {
+            return device.newDefaultLibrary()
+    }
+    
+    return library
 }

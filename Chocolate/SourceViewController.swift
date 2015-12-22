@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class SourceViewController: UIViewController {
     
     @IBOutlet weak var sourceView: UITextView!
@@ -23,9 +25,11 @@ class SourceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let source = try? NSString(contentsOfFile: localShaderPath(), encoding: NSUTF8StringEncoding) as String {
-            sourceView.text = source
+        if let source = try? NSString(contentsOfFile: localShaderPath(), encoding: NSASCIIStringEncoding) as String {
+            sourceView.attributedText = decoratedAttributedSource(source)
         }
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: nil, action: nil)
     }
     
     func adjustForKeyboard(notification: NSNotification) {
@@ -48,10 +52,13 @@ class SourceViewController: UIViewController {
     
     @IBAction func saveAction(sender: AnyObject) {
         do {
-            try sourceView.text.writeToFile(localShaderPath(), atomically: true, encoding: NSUTF8StringEncoding)
+            let source = sourceView.text
+            try source.writeToFile(localShaderPath(), atomically: true, encoding: NSUTF8StringEncoding)
+            sourceView.attributedText = decoratedAttributedSource(source)
             self.performSegueWithIdentifier("show", sender: nil)
         } catch {
             print("Error \(error)")
         }
     }
+    
 }

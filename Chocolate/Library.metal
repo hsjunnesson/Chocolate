@@ -3,7 +3,7 @@
 //  Chocolate
 //
 //  Created by Hans Sjunnesson on 20/12/15.
-//  Copyright © 2015 Hans Sjunnesson. All rights reserved.
+//  Copyright (c) 2015 Hans Sjunnesson. All rights reserved.
 //
 
 #include <metal_stdlib>

@@ -8,7 +8,8 @@
 
 import Foundation
 import Metal
-import MetalKit
+import CoreGraphics
+
 
 public enum RenderErrorType: ErrorType {
     case InvalidResolution

@@ -16,11 +16,27 @@
 		D77478AC1C269C9100F37B97 /* ChocolateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77478AB1C269C9100F37B97 /* ChocolateUITests.swift */; };
 		D77478E71C26A80D00F37B97 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77478DE1C269CF600F37B97 /* Metal.framework */; };
 		D77478E91C26A84C00F37B97 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77478E81C26A84C00F37B97 /* Render.swift */; };
-		D77478EC1C26A89C00F37B97 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77478E51C26A65E00F37B97 /* MetalKit.framework */; };
 		D77479341C283BFF00F37B97 /* Library.metal in Sources */ = {isa = PBXBuildFile; fileRef = D77478EA1C26A87000F37B97 /* Library.metal */; };
 		D77479351C283C5900F37B97 /* Library.metal in CopyFiles */ = {isa = PBXBuildFile; fileRef = D77478EA1C26A87000F37B97 /* Library.metal */; };
 		D77479371C28A67500F37B97 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77479361C28A67500F37B97 /* SourceViewController.swift */; };
+		D77FE1981C2943E900B1AD69 /* MetalScanner.rl in Sources */ = {isa = PBXBuildFile; fileRef = D77FE1971C2943E900B1AD69 /* MetalScanner.rl */; };
+		D77FE19D1C298A4400B1AD69 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77FE19C1C298A4400B1AD69 /* UIColorExtension.swift */; };
+		D77FE19F1C29CD0000B1AD69 /* MetalDecorating.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77FE19E1C29CD0000B1AD69 /* MetalDecorating.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		D77FE19B1C29444300B1AD69 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.rl";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/${INPUT_FILE_BASE}.m",
+			);
+			script = "/usr/local/bin/ragel ${INPUT_FILE_DIR}/${INPUT_FILE_BASE}.rl -o ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.m\n/usr/local/bin/ragel ${INPUT_FILE_DIR}/${INPUT_FILE_BASE}.rl -V -p -o ${INPUT_FILE_DIR}/${INPUT_FILE_BASE}.dot";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		D774789D1C269C9100F37B97 /* PBXContainerItemProxy */ = {
@@ -78,10 +94,14 @@
 		D77478AD1C269C9100F37B97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D77478DE1C269CF600F37B97 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		D77478E21C26A26B00F37B97 /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
-		D77478E51C26A65E00F37B97 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		D77478E81C26A84C00F37B97 /* Render.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Render.swift; sourceTree = "<group>"; };
 		D77478EA1C26A87000F37B97 /* Library.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Library.metal; sourceTree = "<group>"; };
 		D77479361C28A67500F37B97 /* SourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceViewController.swift; sourceTree = "<group>"; };
+		D77FE1951C2943E900B1AD69 /* Chocolate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Chocolate-Bridging-Header.h"; sourceTree = "<group>"; };
+		D77FE1961C2943E900B1AD69 /* MetalScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalScanner.h; sourceTree = "<group>"; };
+		D77FE1971C2943E900B1AD69 /* MetalScanner.rl */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = MetalScanner.rl; sourceTree = "<group>"; };
+		D77FE19C1C298A4400B1AD69 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		D77FE19E1C29CD0000B1AD69 /* MetalDecorating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalDecorating.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +109,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D77478EC1C26A89C00F37B97 /* MetalKit.framework in Frameworks */,
 				D77478E71C26A80D00F37B97 /* Metal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				D77478E21C26A26B00F37B97 /* Playground.playground */,
-				D77478E51C26A65E00F37B97 /* MetalKit.framework */,
 				D77478DE1C269CF600F37B97 /* Metal.framework */,
 				D774788A1C269C9100F37B97 /* Chocolate */,
 				D774789F1C269C9100F37B97 /* ChocolateTests */,
@@ -146,6 +164,9 @@
 				D77478971C269C9100F37B97 /* Info.plist */,
 				D77478E81C26A84C00F37B97 /* Render.swift */,
 				D77478EA1C26A87000F37B97 /* Library.metal */,
+				D77FE19C1C298A4400B1AD69 /* UIColorExtension.swift */,
+				D77FE1991C2943F200B1AD69 /* Scanner */,
+				D77FE1951C2943E900B1AD69 /* Chocolate-Bridging-Header.h */,
 			);
 			path = Chocolate;
 			sourceTree = "<group>";
@@ -168,6 +189,16 @@
 			path = ChocolateUITests;
 			sourceTree = "<group>";
 		};
+		D77FE1991C2943F200B1AD69 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				D77FE1961C2943E900B1AD69 /* MetalScanner.h */,
+				D77FE1971C2943E900B1AD69 /* MetalScanner.rl */,
+				D77FE19E1C29CD0000B1AD69 /* MetalDecorating.swift */,
+			);
+			name = Scanner;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -182,6 +213,7 @@
 				D77479321C2830CE00F37B97 /* CopyFiles */,
 			);
 			buildRules = (
+				D77FE19B1C29444300B1AD69 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -302,7 +334,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D77479371C28A67500F37B97 /* SourceViewController.swift in Sources */,
+				D77FE19D1C298A4400B1AD69 /* UIColorExtension.swift in Sources */,
+				D77FE19F1C29CD0000B1AD69 /* MetalDecorating.swift in Sources */,
 				D77479341C283BFF00F37B97 /* Library.metal in Sources */,
+				D77FE1981C2943E900B1AD69 /* MetalScanner.rl in Sources */,
 				D774788E1C269C9100F37B97 /* RenderViewController.swift in Sources */,
 				D774788C1C269C9100F37B97 /* AppDelegate.swift in Sources */,
 				D77478E91C26A84C00F37B97 /* Render.swift in Sources */,
@@ -447,10 +482,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Chocolate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.Chocolate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Chocolate/Chocolate-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -458,10 +496,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Chocolate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.Chocolate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Chocolate/Chocolate-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -532,6 +572,7 @@
 				D77478B21C269C9100F37B97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D77478B31C269C9100F37B97 /* Build configuration list for PBXNativeTarget "ChocolateTests" */ = {
 			isa = XCConfigurationList;
@@ -540,6 +581,7 @@
 				D77478B51C269C9100F37B97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D77478B61C269C9100F37B97 /* Build configuration list for PBXNativeTarget "ChocolateUITests" */ = {
 			isa = XCConfigurationList;
@@ -548,6 +590,7 @@
 				D77478B81C269C9100F37B97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

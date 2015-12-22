@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try! NSFileManager.defaultManager().copyItemAtPath(shaderSource, toPath: shaderDestination)
             }
         }
-        
+
         return true
     }
 

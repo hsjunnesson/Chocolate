@@ -53,14 +53,14 @@ class RenderViewController: UIViewController {
             
             let uiImage = UIImage(CGImage: cgImage, scale: scale, orientation: .Up)
 
-            let renderTime = self.getTimestamp() - now;
+            let renderTime = Int(self.getTimestamp() - now)
             print("Rendered: \(renderTime) ms")
 
             dispatch_async(dispatch_get_main_queue()) {
                 self.renderView.image = uiImage
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(renderTime) ms", style: .Plain, target: nil, action: nil)
             }
         }
-    
     }
     
     private func getTimestamp() -> Double {

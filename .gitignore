@@ -60,3 +60,6 @@ Carthage/Build
 fastlane/report.xml
 fastlane/screenshots
 
+Chocolate/MetalScanner.dot
+Chocolate/out.png
+

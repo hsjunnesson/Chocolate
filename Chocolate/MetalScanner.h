@@ -54,8 +54,8 @@ typedef NS_ENUM(NSInteger, MetalScannerToken) {
 
 @interface MetalScanner : NSObject
 
-@property (nonatomic, strong) NSArray<MetalScannerTokenWrapper *> * __nonnull tokens;
+@property (nonatomic, strong) NSArray<MetalScannerTokenWrapper *> * _Nonnull tokens;
 
-- (BOOL)scanSource:(NSString * __nonnull)source error:(NSError **)error;
+- (BOOL)scanSource:(NSString * _Nonnull)source error:(NSError * _Nullable * _Nullable)error;
 
 @end

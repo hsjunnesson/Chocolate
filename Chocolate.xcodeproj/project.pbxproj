@@ -22,6 +22,7 @@
 		D77FE1981C2943E900B1AD69 /* MetalScanner.rl in Sources */ = {isa = PBXBuildFile; fileRef = D77FE1971C2943E900B1AD69 /* MetalScanner.rl */; };
 		D77FE19D1C298A4400B1AD69 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77FE19C1C298A4400B1AD69 /* UIColorExtension.swift */; };
 		D77FE19F1C29CD0000B1AD69 /* MetalDecorating.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77FE19E1C29CD0000B1AD69 /* MetalDecorating.swift */; };
+		D77FE1A41C2A8BB100B1AD69 /* BucketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77FE1A31C2A8BB000B1AD69 /* BucketsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -102,6 +103,7 @@
 		D77FE1971C2943E900B1AD69 /* MetalScanner.rl */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = MetalScanner.rl; sourceTree = "<group>"; };
 		D77FE19C1C298A4400B1AD69 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		D77FE19E1C29CD0000B1AD69 /* MetalDecorating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalDecorating.swift; sourceTree = "<group>"; };
+		D77FE1A31C2A8BB000B1AD69 /* BucketsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BucketsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				D774788B1C269C9100F37B97 /* AppDelegate.swift */,
 				D774788D1C269C9100F37B97 /* RenderViewController.swift */,
 				D77479361C28A67500F37B97 /* SourceViewController.swift */,
+				D77FE1A31C2A8BB000B1AD69 /* BucketsViewController.swift */,
 				D774788F1C269C9100F37B97 /* Main.storyboard */,
 				D77478921C269C9100F37B97 /* Assets.xcassets */,
 				D77478941C269C9100F37B97 /* LaunchScreen.storyboard */,
@@ -265,18 +268,22 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Hans Sjunnesson";
 				TargetAttributes = {
 					D77478871C269C9100F37B97 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = N9T29PZPM9;
+						LastSwiftMigration = 0820;
 					};
 					D774789B1C269C9100F37B97 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0820;
 						TestTargetID = D77478871C269C9100F37B97;
 					};
 					D77478A61C269C9100F37B97 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0820;
 						TestTargetID = D77478871C269C9100F37B97;
 					};
 				};
@@ -338,6 +345,7 @@
 				D77FE19F1C29CD0000B1AD69 /* MetalDecorating.swift in Sources */,
 				D77479341C283BFF00F37B97 /* Library.metal in Sources */,
 				D77FE1981C2943E900B1AD69 /* MetalScanner.rl in Sources */,
+				D77FE1A41C2A8BB100B1AD69 /* BucketsViewController.swift in Sources */,
 				D774788E1C269C9100F37B97 /* RenderViewController.swift in Sources */,
 				D774788C1C269C9100F37B97 /* AppDelegate.swift in Sources */,
 				D77478E91C26A84C00F37B97 /* Render.swift in Sources */,
@@ -408,8 +416,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -453,8 +463,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -473,6 +485,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -483,12 +496,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = N9T29PZPM9;
 				INFOPLIST_FILE = Chocolate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.Chocolate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Chocolate/Chocolate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -497,11 +512,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = N9T29PZPM9;
 				INFOPLIST_FILE = Chocolate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.Chocolate";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Chocolate/Chocolate-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -513,6 +530,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.ChocolateTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chocolate.app/Chocolate";
 			};
 			name = Debug;
@@ -525,6 +543,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.ChocolateTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chocolate.app/Chocolate";
 			};
 			name = Release;
@@ -536,6 +555,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.ChocolateUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Chocolate;
 				USES_XCTRUNNER = YES;
 			};
@@ -548,6 +568,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.high-explosive.ChocolateUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Chocolate;
 				USES_XCTRUNNER = YES;
 			};

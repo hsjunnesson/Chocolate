@@ -17,29 +17,29 @@ class SourceViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: "adjustForKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
-        notificationCenter.addObserver(self, selector: "adjustForKeyboard:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(SourceViewController.adjustForKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(SourceViewController.adjustForKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let source = try? NSString(contentsOfFile: localShaderPath(), encoding: NSASCIIStringEncoding) as String {
+        if let source = try? NSString(contentsOfFile: localShaderPath(), encoding: String.Encoding.ascii.rawValue) as String {
             sourceView.attributedText = decoratedAttributedSource(source)
         }
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
     }
     
-    func adjustForKeyboard(notification: NSNotification) {
+    func adjustForKeyboard(_ notification: Notification) {
         let userInfo = notification.userInfo!
         
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-        let keyboardViewEndFrame = view.convertRect(keyboardScreenEndFrame, fromView: view.window)
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
-        if notification.name == UIKeyboardWillHideNotification {
-            sourceView.contentInset = UIEdgeInsetsZero
+        if notification.name == NSNotification.Name.UIKeyboardWillHide {
+            sourceView.contentInset = UIEdgeInsets.zero
         } else {
             sourceView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
         }
@@ -50,12 +50,13 @@ class SourceViewController: UIViewController {
         sourceView.scrollRangeToVisible(selectedRange)
     }
     
-    @IBAction func saveAction(sender: AnyObject) {
+    @IBAction func saveAction(_ sender: AnyObject) {
         do {
-            let source = sourceView.text
-            try source.writeToFile(localShaderPath(), atomically: true, encoding: NSUTF8StringEncoding)
-            sourceView.attributedText = decoratedAttributedSource(source)
-            self.performSegueWithIdentifier("show", sender: nil)
+            if let source = sourceView.text {
+                try source.write(toFile: localShaderPath(), atomically: true, encoding: String.Encoding.utf8)
+                sourceView.attributedText = decoratedAttributedSource(source)
+                self.performSegue(withIdentifier: "show", sender: nil)
+            }
         } catch {
             print("Error \(error)")
         }

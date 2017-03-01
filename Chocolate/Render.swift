@@ -11,70 +11,75 @@ import Metal
 import CoreGraphics
 
 
-public enum RenderErrorType: ErrorType {
-    case InvalidResolution
-    case InvalidImage
-    case InvalidProgram
+public enum RenderErrorType: Error {
+    case invalidResolution
+    case invalidImage
+    case invalidProgram
 }
 
 public func localShaderPath() -> String {
-    let documentDirectoryUrl = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
-    let shaderPath = documentDirectoryUrl.URLByAppendingPathComponent("Library.metal").path!
+    let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
+    let shaderPath = documentDirectoryUrl.appendingPathComponent("Library.metal").path
     
     return shaderPath
 }
 
 public struct Renderer {
     
-    private struct Bucket {
+    public struct Bucket {
         let x: UInt32
         let y: UInt32
         let width: UInt32
         let height: UInt32
     }
     
-    private let device: MTLDevice
-    private let commandQueue: MTLCommandQueue
-    private let library: MTLLibrary
-    private let renderBucketFunction: MTLFunction
-    private let computePipelineState: MTLComputePipelineState
+    fileprivate let device: MTLDevice
+    fileprivate let commandQueue: MTLCommandQueue
+    fileprivate let library: MTLLibrary
+    fileprivate let renderBucketFunction: MTLFunction
+    fileprivate let computePipelineState: MTLComputePipelineState
+    fileprivate let bucket: Bucket
     
-    public init?() {
+    public init?(bucket: Bucket) {
         guard
             let device = MTLCreateSystemDefaultDevice(),
             let library = loadLibrary(device),
-            let renderBucketFunction = library.newFunctionWithName("renderBucket"),
-            let computePipelineState = try? device.newComputePipelineStateWithFunction(renderBucketFunction)
+            let renderBucketFunction = library.makeFunction(name: "renderBucket"),
+            let computePipelineState = try? device.makeComputePipelineState(function: renderBucketFunction)
             else {
             return nil
         }
         
+        self.bucket = bucket
         self.device = device
-        self.commandQueue = device.newCommandQueue()
+        self.commandQueue = device.makeCommandQueue()
         self.library = library
         self.renderBucketFunction = renderBucketFunction
         self.computePipelineState = computePipelineState
     }
     
-    public func render(width width: Int, height: Int) throws -> CGImage {
+    public func render() throws -> CGImage {
         // Preconditions
-        if width % 8 != 0 || height % 8 != 0 {
-            throw RenderErrorType.InvalidResolution
+        if self.bucket.width % 8 != 0 || self.bucket.height % 8 != 0 {
+            throw RenderErrorType.invalidResolution
         }
         
+        let width = Int(self.bucket.width)
+        let height = Int(self.bucket.height)
+        
         // Setup
-        let commandBuffer = commandQueue.commandBuffer()
-        let commandEncoder = commandBuffer.computeCommandEncoder()
+        let commandBuffer = commandQueue.makeCommandBuffer()
+        let commandEncoder = commandBuffer.makeComputeCommandEncoder()
         commandEncoder.setComputePipelineState(computePipelineState)
         
         // Texture
-        let outTexture = device.newTextureWithDescriptor(MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(.RGBA8Unorm, width: width, height: height, mipmapped: false))
-        commandEncoder.setTexture(outTexture, atIndex: 0)
+        let outTexture = device.makeTexture(descriptor: MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .rgba8Unorm, width: width, height: height, mipmapped: false))
+        commandEncoder.setTexture(outTexture, at: 0)
         
         // Bucket
-        var bucket = Bucket(x: 0, y: 0, width: UInt32(width), height: UInt32(height))
-        let bucketBuffer = device.newBufferWithBytes(&bucket, length: sizeof(Bucket), options: .CPUCacheModeDefaultCache)
-        commandEncoder.setBuffer(bucketBuffer, offset: 0, atIndex: 0)
+        var bucket = self.bucket
+        let bucketBuffer = device.makeBuffer(bytes: &bucket, length: MemoryLayout<Bucket>.size, options: MTLResourceOptions())
+        commandEncoder.setBuffer(bucketBuffer, offset: 0, at: 0)
         
         // Thread group
         let threadGroupCount = MTLSizeMake(8, 8, 1)
@@ -90,34 +95,38 @@ public struct Renderer {
         if let image = makeImage(outTexture) {
             return image
         } else {
-            throw RenderErrorType.InvalidImage
+            throw RenderErrorType.invalidImage
         }
     }
     
-    private func makeImage(texture: MTLTexture) -> CGImage? {
+    fileprivate func makeImage(_ texture: MTLTexture) -> CGImage? {
         let imageSize = CGSize(width: texture.width, height: texture.height)
         let imageByteCount = Int(imageSize.width * imageSize.height * 4)
         let bytesPerPixel = 4
         let bytesPerRow = bytesPerPixel * Int(imageSize.width)
-        var imageBytes = [UInt8](count: imageByteCount, repeatedValue: 0)
+        var imageBytes = [UInt8](repeating: 0, count: imageByteCount)
         let region = MTLRegionMake2D(0, 0, Int(imageSize.width), Int(imageSize.height))
-        texture.getBytes(&imageBytes, bytesPerRow: Int(bytesPerRow), fromRegion: region, mipmapLevel: 0)
+        texture.getBytes(&imageBytes, bytesPerRow: Int(bytesPerRow), from: region, mipmapLevel: 0)
 
-        let providerRef = CGDataProviderCreateWithCFData(NSData(bytes: &imageBytes, length: imageBytes.count * sizeof(UInt8)))
-        let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.ByteOrder32Big.rawValue | CGImageAlphaInfo.PremultipliedLast.rawValue)
-        let renderingIntent: CGColorRenderingIntent = .RenderingIntentDefault
+//        let providerRef = CGDataProvider(data: Data(bytes: UnsafePointer<UInt8>(&imageBytes), count: imageBytes.count * sizeof(UInt8)))
+        guard let providerRef = CGDataProvider(data: Data(bytes: &imageBytes, count: imageBytes.count * MemoryLayout<UInt8>.size) as CFData) else {
+            return nil
+        }
+
+        let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue)
+        let renderingIntent: CGColorRenderingIntent = .defaultIntent
         let colorSpaceRef = CGColorSpaceCreateDeviceRGB()
         
-        let imageRef = CGImageCreate(Int(imageSize.width), Int(imageSize.height), 8, 32, bytesPerRow, colorSpaceRef, bitmapInfo, providerRef, nil, false, renderingIntent)
+        let imageRef = CGImage(width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: bytesPerRow, space: colorSpaceRef, bitmapInfo: bitmapInfo, provider: providerRef, decode: nil, shouldInterpolate: false, intent: renderingIntent)
         
         return imageRef
     }
 }
 
-private func loadLibrary(device: MTLDevice) -> MTLLibrary? {
+private func loadLibrary(_ device: MTLDevice) -> MTLLibrary? {
     guard
-        let source = try? NSString(contentsOfFile: localShaderPath(), encoding: NSUTF8StringEncoding) as String,
-        let library = try? device.newLibraryWithSource(source, options: nil) else {
+        let source = try? NSString(contentsOfFile: localShaderPath(), encoding: String.Encoding.utf8.rawValue) as String,
+        let library = try? device.makeLibrary(source: source, options: nil) else {
             return device.newDefaultLibrary()
     }
     

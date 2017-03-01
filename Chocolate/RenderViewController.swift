@@ -17,8 +17,6 @@ class RenderViewController: UIViewController {
     var didRender = false
     
     required init?(coder aDecoder: NSCoder) {
-        self.renderer = Renderer()
-        
         super.init(coder: aDecoder)
     }
     
@@ -27,43 +25,45 @@ class RenderViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        let bounds = self.renderView.bounds
+        let dim = UInt32(min(bounds.width, bounds.height) * UIScreen.main.scale) / 64 * 64
+        let bucket = Renderer.Bucket(x: 0, y: 0, width: dim, height: dim)
+        self.renderer = Renderer(bucket: bucket)
         render()
     }
     
-    private func render() {
+    fileprivate func render() {
         if didRender {
             return
         }
         
         didRender = true
         
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
+        DispatchQueue.global().async {
             let now = self.getTimestamp()
             
-            let width = Int(self.renderView.bounds.width - self.renderView.bounds.width % 8)
-            let height = Int(self.renderView.bounds.height - self.renderView.bounds.height % 8)
-            let scale = UIScreen.mainScreen().scale
+            let scale = UIScreen.main.scale
             
             guard
                 let renderer = self.renderer,
-                let cgImage = try? renderer.render(width: width * Int(scale), height: height * Int(scale)) as CGImage! else {
+                let cgImage = try? renderer.render() as CGImage! else {
                     print("ERROR")
                     return
             }
             
-            let uiImage = UIImage(CGImage: cgImage, scale: scale, orientation: .Up)
+            let uiImage = UIImage(cgImage: cgImage, scale: scale, orientation: .up)
 
             let renderTime = Int(self.getTimestamp() - now)
             print("Rendered: \(renderTime) ms")
 
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.renderView.image = uiImage
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(renderTime) ms", style: .Plain, target: nil, action: nil)
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(renderTime) ms", style: .plain, target: nil, action: nil)
             }
         }
     }
     
-    private func getTimestamp() -> Double {
+    fileprivate func getTimestamp() -> Double {
         var tv = timeval()
         gettimeofday(&tv, nil)
         return (Double(tv.tv_sec) * 1e3 + Double(tv.tv_usec) * 1e-3)

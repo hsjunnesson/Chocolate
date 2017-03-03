@@ -47,26 +47,6 @@ static Hit map(float3 p) {
     float d = sdSphere(p, 0.8);
     h.distance = d;
     return h;
-    
-//    float d = sdBox(p, float3(1.0));
-//    
-//    float s = 1.0;
-//    
-//    for (int m = 0; m < 3; m++) {
-//        float3 x = p * s;
-//        float3 y = 2.0;
-//        float3 a = (x - y * floor(x / y));
-//
-//        s *= 3.0;
-//        float3 r = 1.0 - 3.0 * abs(a);
-//        
-//        float c = sdCross(r) / s;
-//        d = max(d, -c);
-//    }
-//    
-//    h.distance = d;
-//    
-//    return h;
 }
 
 static float3 calcNormal(float3 p) {

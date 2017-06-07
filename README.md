@@ -1,10 +1,10 @@
 # Chocolate
 
-What is it?
+_What is it?_
 
 It's a renderer, using Apple's Metal.
 
-Why Chocolate?
+_Why Chocolate?_
 
 Beacuse it's eye candy.
 

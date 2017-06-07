@@ -37,33 +37,40 @@ public func decoratedAttributedSource(_ source: String) -> NSAttributedString {
             throw MetalDecoratingErrorType.sourceNotASCII
         }
         
-        let scanner = MetalScanner()
-        try scanner.scanSource(source)
+        let scanner = try MetalScanner(source: source)
         
-        for tokenWrapper in scanner.tokens {
-            let range = tokenWrapper.range
-            let token = tokenWrapper.token
-            
+        for (token, range) in scanner.tokens {
             switch token {
+            case .keyword:
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: KeywordColor, range: range)
+            case .number:
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: NumberColor, range: range)
             case .comment:
                 attributedString.addAttribute(NSForegroundColorAttributeName, value: CommentColor, range: range)
                 attributedString.addAttribute(NSFontAttributeName, value: menloItalicFont, range: range)
-            case .float:
-                fallthrough
-            case .integerDecimal:
-                fallthrough
-            case .integerHex:
-                fallthrough
-            case .integerOctal:
-                attributedString.addAttribute(NSForegroundColorAttributeName, value: NumberColor, range: range)
-            case .identifier:
-                let identifier = (source as NSString).substring(with: range)
-                if Keywords.contains(identifier) {
-                    attributedString.addAttribute(NSForegroundColorAttributeName, value: KeywordColor, range: range)
-                }
             default:
                 break
             }
+//            switch token {
+//            case .comment:
+//                attributedString.addAttribute(NSForegroundColorAttributeName, value: CommentColor, range: range)
+//                attributedString.addAttribute(NSFontAttributeName, value: menloItalicFont, range: range)
+//            case .float:
+//                fallthrough
+//            case .integerDecimal:
+//                fallthrough
+//            case .integerHex:
+//                fallthrough
+//            case .integerOctal:
+//                attributedString.addAttribute(NSForegroundColorAttributeName, value: NumberColor, range: range)
+//            case .identifier:
+//                let identifier = (source as NSString).substring(with: range)
+//                if Keywords.contains(identifier) {
+//                    attributedString.addAttribute(NSForegroundColorAttributeName, value: KeywordColor, range: range)
+//                }
+//            default:
+//                break
+//            }
         }
     } catch {
         print("MetalScanner error \(error)")
